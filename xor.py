@@ -1,4 +1,4 @@
-from NeuralNetwork import NeuralNetwork
+from NeuralNetwork.NeuralNetwork import NeuralNetwork
 from random import shuffle
 
 if __name__ == '__main__':
@@ -21,14 +21,19 @@ if __name__ == '__main__':
             "targets": [[0]]
         }
     ]
-    nn = NeuralNetwork([2, 5, 10, 5, 1], 0.3)
+    nn = NeuralNetwork([2, 5, 1], 0.3)
     
     print("start training")
-    for _ in range(50000):
+    for i in range(20000):
         _training_data = training_data[:]
         shuffle(_training_data)
-        for data in _training_data:
-            nn.train(data["inputs"], data["targets"])
+        total = 0
+        for j in range(len(training_data)):
+            data = training_data[j]
+            outputs = nn.train(data["inputs"], data["targets"])
+            if round(list(outputs[0])[0]) == data["targets"][0][0]:
+                total += 1
+        print("epoch n{} average = {}".format(i, total/len(training_data)))
     
     print("start testing")
     print(nn.feed_forward([[0], [0]]))
