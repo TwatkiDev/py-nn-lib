@@ -1,11 +1,10 @@
 from Matrix.NumpyMatrix import NumpyMatrix as Matrix
 from NeuralNetwork.Layer import Layer
+import numpy as np
 
 class NeuralNetwork:
-    def __init__(self, layers, learning_rate = 0.1):
+    def __init__(self, learning_rate = 0.1):
         self.layers = []
-        for i in range(1, len(layers)):
-            self.layers.append(Layer(layers[i-1], layers[i]))
         self.learning_rate = learning_rate
     
     def __str__(self):
@@ -15,6 +14,9 @@ class NeuralNetwork:
         ret += "]\n"
         return ret
     
+    def add_layer(self, layer):
+        self.layers.append(layer)
+
     def feed_forward(self, inputs_array):
         inputs = Matrix.from_array(inputs_array)
         outputs = self._feed_forward(inputs)
@@ -33,8 +35,8 @@ class NeuralNetwork:
         
         outputs = self._feed_forward(inputs)
 
-        err = Matrix.element_wise_sub(targets, outputs) 
-
+        err = Matrix.element_wise_sub(targets, outputs)
+        
         for l in reversed(self.layers):
             err = l.backward_propagation(err, self.learning_rate)
 

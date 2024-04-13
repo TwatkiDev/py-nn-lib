@@ -12,7 +12,7 @@ class NumpyMatrix(MatrixInterface):
             row = [0] * columns
             matrix.append(row)
         
-        self.matrix = np.array(matrix)
+        self.matrix = np.array(matrix, dtype="float128")
     
     ################
     # static methods
@@ -21,7 +21,7 @@ class NumpyMatrix(MatrixInterface):
     # take a 2D array and return the equivalent matrix
     @staticmethod
     def from_array(arr):
-        matrix = np.array(arr)
+        matrix = np.array(arr, dtype="float128")
         rows, columns = matrix.shape
         ret = NumpyMatrix(rows, columns)
         ret.matrix = matrix
@@ -33,7 +33,7 @@ class NumpyMatrix(MatrixInterface):
         if not isinstance(m, NumpyMatrix):
             print("is not a matrix")
             return None
-        ret = np.array(m.matrix)
+        ret = np.array(m.matrix, dtype="float128")
         return ret
     
     # take a matrix and return another matrix with the same values
