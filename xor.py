@@ -24,7 +24,7 @@ if __name__ == '__main__':
     nn = NeuralNetwork([2, 5, 1], 0.3)
     
     print("start training")
-    for i in range(20000):
+    for i in range(2000):
         _training_data = training_data[:]
         shuffle(_training_data)
         total = 0
