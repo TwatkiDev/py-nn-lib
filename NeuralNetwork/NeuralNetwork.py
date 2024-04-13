@@ -1,6 +1,6 @@
 from Matrix.NumpyMatrix import NumpyMatrix as Matrix
 from NeuralNetwork.Layer import Layer
-import numpy as np
+import jsonpickle
 
 class NeuralNetwork:
     def __init__(self, learning_rate = 0.1):
@@ -41,3 +41,26 @@ class NeuralNetwork:
             err = l.backward_propagation(err, self.learning_rate)
 
         return Matrix.to_array(outputs)
+    
+    @staticmethod
+    def encode(nn):
+        return jsonpickle.encode(nn)
+    
+    @staticmethod
+    def decode(pickle):
+        return jsonpickle.decode(pickle)
+    
+    @staticmethod
+    def save_to_file(nn, file_name):
+        pickle = NeuralNetwork.encode(nn)
+        fd = open(file_name, "w")
+        fd.write(pickle)
+        fd.close()
+
+    @staticmethod
+    def load_from_file(file_name):
+        fd = open(file_name, "r")
+        pickle = fd.read()
+        fd.close()
+        return NeuralNetwork.decode(pickle)
+
